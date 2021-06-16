@@ -23,18 +23,24 @@ auth = firebase.auth()
 #signup
 def login(request):
     if request.method == 'POST':
-        email =request.POST['email']
-        password =request.POST['password']
-        print(email)
-        print(password)
-        print("how are you")
+        email =request.POST.get("email")
+        password =request.POST.get("password")
         try:
-            auth.create_user_with_email_and_password(email,password)
-            return render(request, 'index.html', {'email':email})
-        except:
-            return HttpResponse("Available")
+            user = auth.sign_in_with_email_and_password(email, password)
+            return render(request, 'index.html',{'email':email})
+        except :
+            return HttpResponse("invalid")
 
 def home(request):
     return render(request, 'home.html',{'name':'venkat'})
 def signup(request):
     return render(request, 'signup.html')
+
+def dashbord(request):
+    return render(request, 'dashbord.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def contact(request):
+    return render(request, 'contact.html')
